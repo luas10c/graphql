@@ -87,7 +87,7 @@ export class GraphQLDefinitionsFactory {
       throw new Error(`"typeDefs" property cannot be null.`);
     }
     let schema = makeExecutableSchema({
-      typeDefs: mergedTypeDefs,
+      typeDefs: mergedTypeDefs as string | string[],
       resolverValidationOptions: { requireResolversToMatchSchema: 'ignore' },
     });
     schema = removeTempField(schema);

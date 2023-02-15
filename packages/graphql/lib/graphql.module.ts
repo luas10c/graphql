@@ -158,7 +158,7 @@ export class GraphQLModule<
 
     const gqlSchema = await this._graphQlAdapter.generateSchema({
       ...options,
-      typeDefs: mergedTypeDefs,
+      typeDefs: mergedTypeDefs as string | string[],
     });
     this.gqlSchemaHost.schema = gqlSchema;
 

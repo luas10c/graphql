@@ -240,7 +240,7 @@ export class GraphQLAstExplorer {
       methods: [],
     };
 
-    const interfaces = get(item, 'interfaces');
+    const interfaces: [] = get(item, 'interfaces');
     if (interfaces) {
       if (mode === 'class') {
         (parentStructure as ClassDeclarationStructure).implements = interfaces
