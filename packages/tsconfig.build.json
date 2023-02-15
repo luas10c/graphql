@@ -7,6 +7,7 @@
     "noImplicitAny": false,
     "importHelpers": true,
     "removeComments": false,
+    "esModuleInterop": true,
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
