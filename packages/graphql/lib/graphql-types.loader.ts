@@ -1,13 +1,9 @@
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { Injectable } from '@nestjs/common';
-import * as glob from 'fast-glob';
-import * as fs from 'fs';
+import { readFile } from 'node:fs/promises';
 import { flatten } from 'lodash';
-import * as util from 'util';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const normalize = require('normalize-path');
-const readFile = util.promisify(fs.readFile);
+import glob from 'fast-glob';
+import normalize from 'normalize-path';
 
 @Injectable()
 export class GraphQLTypesLoader {
