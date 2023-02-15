@@ -1,15 +1,19 @@
 import { ApolloServer, type BaseContext } from '@apollo/server';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from '@apollo/server-plugin-landing-page-graphql-playground';
+
 import { ApolloServerErrorCode } from '@apollo/server/errors';
 import { expressMiddleware } from '@apollo/server/express4';
-import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled';
+
+import { ApolloServerPluginLandingPageProductionDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+
 import { HttpStatus } from '@nestjs/common';
 import { loadPackage } from '@nestjs/common/utils/load-package.util';
 import { isFunction } from '@nestjs/common/utils/shared.utils';
 import { AbstractGraphQLDriver } from '@nestjs/graphql';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
-import * as omit from 'lodash.omit';
+
+import omit from 'lodash.omit';
+
 import { ApolloDriverConfig } from '../interfaces';
 import { createAsyncIterator } from '../utils/async-iterator.util';
 
@@ -52,27 +56,10 @@ export abstract class ApolloBaseDriver<
       stopOnTerminationSignals: false,
     };
 
-    if (
-      (options.playground === undefined &&
-        process.env.NODE_ENV !== 'production') ||
-      options.playground
-    ) {
-      const playgroundOptions =
-        typeof options.playground === 'object' ? options.playground : undefined;
+    if (!options.playground || process.env.NODE_ENV === 'production') {
       defaults = {
         ...defaults,
-        plugins: [
-          ApolloServerPluginLandingPageGraphQLPlayground(playgroundOptions),
-        ],
-      };
-    } else if (
-      (options.playground === undefined &&
-        process.env.NODE_ENV === 'production') ||
-      options.playground === false
-    ) {
-      defaults = {
-        ...defaults,
-        plugins: [ApolloServerPluginLandingPageDisabled()],
+        plugins: [ApolloServerPluginLandingPageProductionDefault()],
       };
     }
 
